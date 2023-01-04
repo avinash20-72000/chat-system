@@ -5,6 +5,7 @@ namespace App\Http\Controllers\UserManagement;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -25,7 +26,7 @@ class UserController extends Controller
         return view('admin.UserManagement.User.form',$data);
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         $user                   =   new User();
         $user->name             =   $request->name;      
@@ -53,7 +54,7 @@ class UserController extends Controller
         return view('admin.UserManagement.User.form',$data);
     }
 
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $user                   =   User::findOrFail($id);
         $user->name             =   $request->name;      
@@ -69,5 +70,17 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::findOrFail($id)->delete();
+    }
+
+    public function assignRoles(Request $request)
+    {
+        $userid         = $request->input('user');
+        $user           = User::find($userid);
+        $roles          = $request->input('role'); // array of role ids
+        if (empty($roles)) {
+            $roles      = array();
+        }
+        $user->roles()->sync($roles);
+        return redirect()->back()->with('success', 'Role Assigned Successful');
     }
 }

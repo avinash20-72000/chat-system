@@ -40,6 +40,7 @@ Route::group(['middleware'=>['auth']],function()
     Route::resource('role',                 RoleController::class);
     Route::resource('permission',           PermissionController::class);
     Route::resource('module',               ModuleController::class);
+    Route::post('role/assign',              [UserController::class,'assignRoles'])->name('assignRole');
 });
 
 

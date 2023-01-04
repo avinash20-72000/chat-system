@@ -46,7 +46,40 @@
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-
         {{ Form::close() }}
     </div>
+
+    @if(!empty($user->id))
+            <div class="col-12 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Assign Roles</h4>
+                        {{ Form::open(['route' => 'assignRole']) }}
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ Form::hidden('user', $user->id) }}
+                                    <div class="form-group row">
+                                        @foreach ($roles as $role)
+                                            <div class=" col-lg-3 col-md- col-sm-6 col-xs-12">
+                                                <div class="checkbox no-margin">
+                                                    <label>
+                                                        {{ Form::checkbox('role[]', $role->id, $user->hasRole($role->name)) }}
+                                                        {{ $role->name }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        {{ Form::close() }}
+                    </div>
+                </div>
+            </div>
+        @endif
 @endsection
