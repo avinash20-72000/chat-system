@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -22,9 +23,9 @@ use App\Http\Controllers\UserManagement\PermissionController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/dashboard', function () {
-    return view('admin.layouts.master');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('admin.layouts.master');
+// })->middleware(['auth'])->name('dashboard');
 Route::get('/', function () {
     return view('admin.layouts.master');
 })->middleware(['auth'])->name('dashboard');
@@ -41,6 +42,12 @@ Route::group(['middleware'=>['auth']],function()
     Route::resource('permission',           PermissionController::class);
     Route::resource('module',               ModuleController::class);
     Route::post('role/assign',              [UserController::class,'assignRoles'])->name('assignRole');
+
+    //chat
+
+    Route::get('chat-user',                 [ChatController::class,'chats'])->name('getUsers');
+    Route::get('message-box/{id?}',         [ChatController::class,'messageBox'])->name('messageBox');
+    Route::post('message',                  [ChatController::class,'saveMessage'])->name('saveMessage');
 });
 
 
