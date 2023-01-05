@@ -16,4 +16,9 @@ class Messages extends Model
     {
         return $this->belongsTo(Chat::class, 'chat_id');
     }
+    
+    public function getDateAttribute()
+    {
+        return $this->created_at->format('d-m-Y h:i');
+    }
 }

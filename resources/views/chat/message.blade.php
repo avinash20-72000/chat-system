@@ -43,7 +43,7 @@
                 </div>
                 <div class="msg_cotainer">
                     {{$message->message}}
-                    <span class="msg_time" >{{$message->created_at}}</span>
+                    <span class="msg_time" >{{$message->getDateAttribute()}}</span>
                 </div>
             </div>
         @endforeach
