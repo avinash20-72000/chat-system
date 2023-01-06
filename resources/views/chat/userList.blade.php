@@ -1,8 +1,11 @@
 <div class="card-body contacts_body">
     <ul class="contacts">
         @foreach($users as $user)
+        @php
+            $active =   request()->is('message-box/'.$user->id) ? 'active' : '';
+        @endphp
             <a href="{{ route('messageBox',['id'=>$user->id])}}" onClick='getUsers({{$user->id}})'>
-                <li class="active" >
+                <li class="{{$active}}" >
                     <div class="d-flex bd-highlight">
                         <div class="img_cont">
                             <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
