@@ -7,7 +7,7 @@
                 <span class="online_icon"></span>
             </div>
             <div class="user_info">
-                <span>{{ ucFirst($sendMessage->name) }}</span>
+                <span>{{ ucFirst($userName) }}</span>
                 <p>1767 Messages</p>
             </div>
             <div class="video_cam">
@@ -26,27 +26,28 @@
         </div>
     </div>
     <div class="card-body msg_card_body">
-        @foreach($chatting as $message)
-            @php
-                $position = 'justify-content-start';
-                if (auth()->user()->id == $message->chats->sender_id) {
-                    $position = 'justify-content-end';
-                }
-            @endphp
-        {{-- {{dd($message)}} --}}
-            <div class="d-flex {{$position}} mb-4">
-                <div class="img_cont_msg">
-                    @if($message->chats->sender_id != auth()->user()->id)
-                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                        class="rounded-circle user_img_msg">
-                        @endif
+        @if($messages)
+            @foreach($messages as $message)
+                @php
+                    $position = 'justify-content-start';
+                    if (auth()->user()->id == $message->sender_id) {
+                        $position = 'justify-content-end';
+                    }
+                @endphp
+                <div class="d-flex {{$position}} mb-4">
+                    <div class="img_cont_msg">
+                        @if($message->sender_id != auth()->user()->id)
+                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                            class="rounded-circle user_img_msg">
+                            @endif
+                    </div>
+                    <div class="msg_cotainer">
+                        {{$message->message}}
+                        <span class="msg_time" >{{$message->getDateAttribute()}}</span>
+                    </div>
                 </div>
-                <div class="msg_cotainer">
-                    {{$message->message}}
-                    <span class="msg_time" >{{$message->getDateAttribute()}}</span>
-                </div>
-            </div>
-        @endforeach
+            @endforeach
+        @endif
         {{-- <div class="d-flex justify-content-end mb-4"> --}}
             {{-- <div class="msg_cotainer_send">
                 Hi Khalid i am good tnx how about you?
@@ -110,7 +111,8 @@
     </div>
     <div class="card-footer">
         {{Form::model($message,['method'=>$method,'route'=>$submitRoute])}}
-        {{ Form::hidden('receiver_id', $sendMessage->id) }}
+        {{ Form::hidden('receiver_id', request()->id) }}
+        {{ Form::hidden('chat_id', $chatId) }}
             <div class="input-group">
                 <div class="input-group-append">
                     <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>

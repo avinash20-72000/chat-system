@@ -298,7 +298,7 @@
                 </div>
             </div>
             <div class="col-md-8 col-xl-6 chat">
-                @if(!empty($sendMessage))
+                @if(request()->id)
                     @include('chat.message')
                 @endif
             </div>

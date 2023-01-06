@@ -9,27 +9,39 @@ use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
-    public function chats($message=false)
+    public function chats($message = false)
     {
-        $data['users']  =  User::where('id','<>',auth()->user()->id)->get();
+        $data['users']  =  User::where('id', '<>', auth()->user()->id)->get();
 
-        if(request()->id)
-        {
+        if (request()->id) {
 
             $sendMessage            =   $message;
-            $data['chatting']       =   Messages::with('chats')->whereHas('chats', function($query) use($sendMessage)
-                                        {
-                                            $query->where('sender_id',$sendMessage->id)->orWhere('receiver_id',$sendMessage->id);
+            $chat                   =   Chat::with('messages')->where(function ($query) use ($sendMessage) {
+                                            $query->where('sender_id', auth()->user()->id)->where('receiver_id', $sendMessage->id);
+                                        })->orWhere(function ($query1) use ($sendMessage) {
+                                            $query1->where('sender_id', $sendMessage->id)->where('receiver_id', auth()->user()->id);
                                         })->get();
-                                        // dd($data['chatting']);
+            if ($chat->isNotEmpty()) {
+                $messages           =   $chat[0]->messages;
+                $chatId             =   $chat[0]->id;
+            } else {
+                $chat               =   new Chat();
+                $chat->sender_id    =   auth()->user()->id;
+                $chat->receiver_id  =   $sendMessage->id;
+                $chat->save();
+                $messages           =   '';
+                $chatId             =   $chat->id;
+            }
+            $data['chatId']         =   $chatId;
+            $data['messages']       =    $messages;
             $data['message']        =   new Messages();
             $data['method']         =   'POST';
             $data['submitRoute']    =   'saveMessage';
-            $data['sendMessage']    =   $sendMessage;
+            $data['userName']       =   $sendMessage->name;
         }
-        
-        
-        return view('chat.index',$data);
+
+
+        return view('chat.index', $data);
     }
 
     public function messageBox($id)
@@ -41,13 +53,10 @@ class ChatController extends Controller
 
     public function saveMessage(Request $request)
     {
-        $chat               =   new Chat();
-        $chat->sender_id    =   auth()->user()->id;
-        $chat->receiver_id    =   $request->receiver_id;
-        $chat->save();
-        $message            =   new Messages();
-        $message->message   =   $request->message;
-        $message->chat_id   =   $chat->id;
+        $message                =   new Messages();
+        $message->message       =   $request->message;
+        $message->sender_id     =   auth()->user()->id;
+        $message->chat_id       =   $request->chat_id;
         $message->save();
 
         return back();
