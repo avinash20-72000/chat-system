@@ -4,7 +4,7 @@
         @php
             $active =   request()->is('message-box/'.$user->id) ? 'active' : '';
         @endphp
-            <a href="{{ route('messageBox',['id'=>$user->id])}}" onClick='getUsers({{$user->id}})'>
+            <a href="{{ route('messageBox',['id'=>$user->id])}}">
                 <li class="{{$active}}" >
                     <div class="d-flex bd-highlight">
                         <div class="img_cont">

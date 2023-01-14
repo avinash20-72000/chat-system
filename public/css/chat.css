@@ -249,6 +249,13 @@ html {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
+.typeahead{
+    background-color: #d8d8d8;
+    width: 100%;
+    text-align:justify;
+    
+}
+
 @media(max-width: 576px) {
     .contacts_card {
         margin-bottom: 15px !important;

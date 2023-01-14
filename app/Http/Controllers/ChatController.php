@@ -9,13 +9,13 @@ use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
-    public function chats($message = false)
+    public function chats($user = false)
     {
         $data['users']  =  User::where('id', '<>', auth()->user()->id)->get();
 
         if (request()->id) {
 
-            $sendMessage            =   $message;
+            $sendMessage            =   $user;
             $chat                   =   Chat::with('messages')->where(function ($query) use ($sendMessage) {
                                             $query->where('sender_id', auth()->user()->id)->where('receiver_id', $sendMessage->id);
                                         })->orWhere(function ($query1) use ($sendMessage) {
@@ -46,9 +46,9 @@ class ChatController extends Controller
 
     public function messageBox($id)
     {
-        $message  =  User::findOrfail($id);
-
-        return $this->chats($message);
+        $user  =  User::findOrfail($id);
+        
+        return $this->chats($user);
     }
 
     public function saveMessage(Request $request)
@@ -60,5 +60,17 @@ class ChatController extends Controller
         $message->save();
 
         return back();
+    }
+
+    public function getUsers(Request $request)
+    {
+        $data   = $request->all();
+        $query  = $data['query'];
+
+        $filter_data = User::select('name','id')
+            ->where('name', 'LIKE', '%' . $query . '%')
+            ->get();
+
+        return response()->json($filter_data);
     }
 }

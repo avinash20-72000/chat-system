@@ -45,9 +45,10 @@ Route::group(['middleware'=>['auth']],function()
 
     //chat
 
-    Route::get('chat-user',                 [ChatController::class,'chats'])->name('getUsers');
+    Route::get('/chat-user',                 [ChatController::class,'chats'])->name('chatUsers');
     Route::get('message-box/{id?}',         [ChatController::class,'messageBox'])->name('messageBox');
     Route::post('message',                  [ChatController::class,'saveMessage'])->name('saveMessage');
+    Route::get('get/user',                 [ChatController::class,'getUsers'])->name('getUsers');
 });
 
 
