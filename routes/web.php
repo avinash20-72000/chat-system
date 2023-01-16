@@ -23,9 +23,9 @@ use App\Http\Controllers\UserManagement\PermissionController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-// Route::get('/dashboard', function () {
-//     return view('admin.layouts.master');
-// })->middleware(['auth'])->name('dashboard');
+Route::get('/test', function () {
+    return view('chat.oldLogin');
+});
 Route::get('/', function () {
     return view('admin.layouts.master');
 })->middleware(['auth'])->name('dashboard');
