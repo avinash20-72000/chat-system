@@ -14,9 +14,7 @@
  .main {
      width: 350px;
      height: 500px;
-     background: red;
      overflow: hidden;
-     background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
      border-radius: 10px;
      box-shadow: 5px 20px 50px #000;
  }
@@ -31,12 +29,19 @@
      height: 100%;
  }
 
+ .signup label{
+    color: #fff;
+    /* margin: 60px; */
+    margin: 30px 60px 10px 60px;
+        /* t,r,b,l   */
+    /* margin-bottom: 10px;
+    margin-top: 30px; */
+ }
+
  label {
-     color: #fff;
      font-size: 2.3em;
      justify-content: center;
      display: flex;
-     margin: 60px;
      font-weight: bold;
      cursor: pointer;
      transition: .5s ease-in-out;
@@ -61,13 +66,13 @@
 
  button {
      width: 60%;
-     height: 40px;
+     height: 45px;
      margin: 10px auto;
      justify-content: center;
      display: block;
      font-size: 1em;
      font-weight: bold;
-     margin-top: 20px;
+     margin-top: 30px;
      outline: none;
      border: none;
      border-radius: 5px;
@@ -93,13 +98,14 @@
  .login {
      height: 460px;
      background: #eee;
-     border-radius: 60% / 10%;
-     transform: translateY(-180px);
+     /* border-radius: 60% / 10%; */
+     transform: translateY(-157px);
      transition: .8s ease-in-out;
  }
 
  .login label {
      color: #573b8a;
+     margin: 60px;
      transform: scale(.6);
  }
 

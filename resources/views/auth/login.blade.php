@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Chat | User</title>
     <link rel="stylesheet" type="text/css" href="slide navbar style.css">
