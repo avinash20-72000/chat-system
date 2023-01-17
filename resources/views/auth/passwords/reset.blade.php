@@ -31,13 +31,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                
                             </div>
                         </div>
 
@@ -45,8 +39,7 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
+                                                            </div>
                         </div>
 
                         <div class="row mb-0">
@@ -83,9 +76,18 @@
     <div class="main">
             {{ Form::open(['method' => 'POST', 'route' => 'password.update', 'class' => 'reset-password']) }}
             <h2>Reset Password</h2>
+            <input type="hidden" name="token" value="{{ $token }}">
             {{ Form::email('email', $email ?? old('email'), ['placeholder' => 'E-mail', 'required']) }}
-            {{ Form::password('password', ['placeholder' => 'New Password']) }}
-            {{ Form::password('password_confirmation', ['placeholder' => 'Password Confirm']) }}
+            {{ Form::password('password', ["class"=>"form-control",'placeholder' => 'New Password', "id"=>"password"]) }}
+            {{ Form::password('password_confirmation', ["class"=>"form-control",'placeholder' => 'Password Confirm', "id"=>"password-confirm", "required"]) }}
+            {{-- <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password"> --}}
+
+            {{-- <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password"> --}}
+            @error('password')
+                <span class="invalid-feedback" role="alert" style="color:red;">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
             <button type="submit"> {{ __('Reset') }}</button>
             {{ Form::close() }}
 

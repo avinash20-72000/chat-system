@@ -25,4 +25,11 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    
+    public function dashboard()
+    {
+        abort_if((auth()->user()->is_admin != 1),404);
+
+        return view('admin.layouts.master');
+    }
 }

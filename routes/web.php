@@ -24,9 +24,7 @@ use App\Http\Controllers\UserManagement\PermissionController;
 //     return view('welcome');
 // });
 
-Route::get('/', function () {
-    return view('admin.layouts.master');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/', [HomeController::class, 'dashboard'])->middleware(['auth'])->name('dashboard');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 require __DIR__.'/auth.php';

@@ -27,6 +27,12 @@
 
 <body>
     <div class="container-fluid h-100">
+        {{ Form::open(['method'=>'POST', 'route' =>'logout', 'class' => 'float-right mt-4'])}}
+        @csrf
+        <button type="submit" class="btn btn-danger" >
+            Logout
+        </button>
+        {{ Form::close() }}
         <div class="row justify-content-center h-100">
             @yield('chat-content')
         </div>
