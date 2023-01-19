@@ -25,15 +25,15 @@ h2{
     width: 100%;
 }
 
-.signup h2{
-    color: #fff;
+.signup h2, .login h2, .forget-password h2, .reset-password h2{
     font-size: 2.5rem;
     font-weight: bold;
     cursor: pointer;
     margin-bottom: 2.5rem;
+    color: #fff;
 }
 
-.signup input{
+.signup input, .login input, .forget-password input, .reset-password input{
     width: 75%;
     padding: 10px;
     border-radius: 5px;
@@ -43,7 +43,7 @@ h2{
     background: #fff;
 }
 
-.signup button{
+.signup button, .login button ,.forget-password button, .reset-password button{
     width: 165px;
     font-size: 16px;
     padding: 10px;
@@ -51,12 +51,15 @@ h2{
     border: none;
     border-radius: 6px;
     outline: none;
-    background: #fff;
     cursor: pointer;
-    transition: .2s ease-in;
 }
 
-.signup button:hover{
+.signup button{
+    transition: .2s ease-in;
+    background: #fff;
+}
+
+.signup button:hover, .forget-password button:hover, .reset-password button:hover{
     background: #373e3e;
     color: #fff;
 }
@@ -84,14 +87,14 @@ input::placeholder{
   }
 
 .login h2{
-    font-size: 2.5rem;
-    font-weight: bold;
+    /* font-size: 2.5rem; */
+    /* font-weight: bold; */
     color: #573b8a;
     margin-bottom: 6rem;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
-.login input{
+/* .login input{
     background: #fff;
     border: none;
     outline: none;
@@ -99,19 +102,19 @@ input::placeholder{
     width: 75%;
     padding: 10px;
     margin-bottom: 20px;
-}
+} */
 
 .login button{
-    border: none;
+    /* border: none; */
     color: #fff;
     background: #573b8a;
-    width: 165px;
-    font-size: 16px;
-    padding: 10px;
-    font-weight: bold;
-    border-radius: 6px;
-    outline: none;
-    cursor: pointer;
+    /* width: 165px; */
+    /* font-size: 16px; */
+    /* padding: 10px; */
+    /* font-weight: bold; */
+    /* border-radius: 6px; */
+    /* outline: none; */
+    /* cursor: pointer; */
     margin: 7px;
 }
 
@@ -142,40 +145,41 @@ input::placeholder{
 }
 
 .forget-password input{
-    background: #fff;
+    /* background: #fff;
     border: none;
     outline: none;
     border-radius: 5px;
     width: 75%;
-    padding: 10px;
+    padding: 10px; */
     margin-bottom: 25px;    
 }
 
 .forget-password button{
-    width: 95px;
-    font-size: 16px;
-    padding: 10px;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    outline: none;
-    background: #fff;
-    cursor: pointer;
+    /* width: 95px; */
+    /* font-size: 16px; */
+    /* padding: 10px; */
+    /* font-weight: bold; */
+    /* border: none; */
+    /* border-radius: 6px; */
+    /* outline: none; */
+    /* cursor: pointer; */
     transition: .2s ease-in;
+    background: #fff;
+    width: 95px;
 }
 
-.forget-password button:hover{
+/* .forget-password button:hover{
     background: #373e3e;
     color: #fff;
-}
+} */
 
-.forget-password h2{
-    color: #fff;
-    font-size: 2.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    margin-bottom: 2.5rem;
-}
+/* .forget-password h2{ */
+    /* color: #fff; */
+    /* font-size: 2.5rem; */
+    /* font-weight: bold; */
+    /* cursor: pointer; */
+    /* margin-bottom: 2.5rem; */
+/* } */
 
 .forget-password form{
     display: flex;
@@ -201,34 +205,35 @@ input::placeholder{
     display: flex;
 }
 .reset-password input{
-    background: #fff;
+    /* background: #fff;
     border: none;
     outline: none;
     border-radius: 5px;
     width: 75%;
-    padding: 10px;
+    padding: 10px; */
     margin-bottom: 25px;   
 }
 .reset-password button{
     width: 95px;
-    font-size: 16px;
-    padding: 10px;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    outline: none;
+    /* font-size: 16px; */
+    /* padding: 10px; */
+    /* font-weight: bold; */
+    /* border: none; */
+    /* border-radius: 6px; */
+    /* outline: none; */
     background: #fff;
-    cursor: pointer;
+    /* cursor: pointer; */
     transition: .2s ease-in; 
 }
-.reset-password button:hover{
+
+/* .reset-password button:hover{
     background: #373e3e;
     color: #fff;
-}
-.reset-password h2{
+} */
+/* .reset-password h2{
     color: #fff;
     font-size: 2.5rem;
     font-weight: bold;
     cursor: pointer;
     margin-bottom: 2.5rem;
-}
+} */
