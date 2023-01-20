@@ -68,18 +68,6 @@
                 </li>
             </ul>
 
-            {{-- <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
-                <li class="nav-item menu-open">
-                    <form action="{{ route('logout') }}" method="post">
-                        @csrf
-                        <button type="submit" class="dropdown-item">
-                            <i class="ti-power-off text-gray"></i>
-                            Logout
-                        </button>
-                    </form>
-                </li>
-            </ul> --}}
         </nav>
     </div>
 </aside>

@@ -59,6 +59,10 @@ class ChatController extends Controller
         $message->chat_id       =   $request->chat_id;
         $message->save();
 
+        $link       =   route('messageBox',['id' =>$request->receiver_id ]);
+        
+        send_notification($request->receiver_id, 'You have a new message from' .  auth()->user()->name, $link, 'new message');
+
         return back();
     }
 

@@ -30,6 +30,6 @@ class HomeController extends Controller
     {
         abort_if((auth()->user()->is_admin != 1),404);
 
-        return view('admin.layouts.master');
+        return redirect(route('adminDashboard'));
     }
 }
