@@ -26,10 +26,10 @@ class HomeController extends Controller
         return view('home');
     }
     
-    public function dashboard()
-    {
-        abort_if((auth()->user()->is_admin != 1),404);
+    // public function dashboard()
+    // {
+    //     abort_if((auth()->user()->is_admin != 1),404);
 
-        return redirect(route('adminDashboard'));
-    }
+    //     return redirect(route('adminDashboard'));
+    // }
 }
