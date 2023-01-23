@@ -26,7 +26,7 @@ Route::group(['middleware'=>['auth']],function()
     Route::post('role/assign',              [UserController::class,'assignRoles'])->name('assignRole');
 
     Route::get('dashboard',                 [DashboardController::class,'dashboard'])->name('adminDashboard');
-    Route::get('/',                         [DashboardController::class,'dashboard'])->name('dashboard');
+    Route::get('/admin-user',                         [DashboardController::class,'dashboard'])->name('dashboard');
 
     //chat
 

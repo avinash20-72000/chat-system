@@ -1,4 +1,4 @@
-<div class="card-body contacts_body">
+<div class="contacts_body">
     <ul class="contacts">
         @foreach($users as $user)
         @php

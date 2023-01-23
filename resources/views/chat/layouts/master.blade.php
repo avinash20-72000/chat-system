@@ -78,6 +78,22 @@
             });
         }
     });
+
+
+    // user search fixed position
+    window.onscroll = function () {
+        myFunction()
+    };
+    var header = $("#fixheader");
+    var sticky = header.offsetTop;
+    function myFunction() {
+        if ($(this).scrollTop() > 400 && $(this).width() >= 320) {
+            header.addClass("sticky").removeClass("sticky-down");
+        }
+        else {
+            header.removeClass("sticky").addClass("sticky-down");
+        }
+    };
 </script>
 @yield('chat-script')
 
