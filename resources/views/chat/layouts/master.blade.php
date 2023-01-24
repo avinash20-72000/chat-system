@@ -25,14 +25,16 @@
             <ul>
                 <li><a href="#"><i class="fa fa-bell"></i></li></a>
                 <li><a href="#">Profile</a></li>
+                <li>
+                    {{ Form::open(['method' => 'POST', 'route' => 'logout']) }}
+                    @csrf
+                    <button type="submit" class="btn btn-danger" style="margin: -10px">
+                        Logout
+                    </button>
+                    {{ Form::close() }}
+                </li>
             </ul>
         </div>
-        {{-- {{ Form::open(['method'=>'POST', 'route' =>'logout', 'class' => 'float-right mt-4'])}}
-        @csrf
-        <button type="submit" class="btn btn-danger" >
-            Logout
-        </button>
-        {{ Form::close() }} --}}
         <div class="chat-container">
             @yield('chat-content')
         </div>
@@ -50,8 +52,19 @@
             $('.action_menu').toggle();
         });
         $("#text").val("");
+        $("#send-btn").attr("disabled", true);
     });
 
+    $('#text').on('input', function(e) {
+        if ($('#text').val().length != 0 && $("#text").val().replace(/^\s+|\s+$/g, "").length != 0) {
+            $("#send-btn").removeAttr("disabled");
+        } else {
+            $("#send-btn").attr("disabled", true);
+
+        }
+    });
+    
+    
     var path = "{{ url('get/user') }}";
     var chatRoute = "{{ route('messageBox', ':id') }}";
     $('#user_name').typeahead({
@@ -81,16 +94,16 @@
 
 
     // user search fixed position
-    window.onscroll = function () {
+    window.onscroll = function() {
         myFunction()
     };
     var header = $("#fixheader");
     var sticky = header.offsetTop;
+
     function myFunction() {
         if ($(this).scrollTop() > 400 && $(this).width() >= 320) {
             header.addClass("sticky").removeClass("sticky-down");
-        }
-        else {
+        } else {
             header.removeClass("sticky").addClass("sticky-down");
         }
     };

@@ -57,7 +57,7 @@
     <div class="input-field">
         <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
         {{ Form::textarea('message', null, ['class' => 'type_msg', 'id' => 'text', 'placeholder' => 'Type your message...']) }}
-        <button type="submit" class="send_btn"><i class="fas fa-location-arrow"></i></button>
+        <button type="submit" class="send_btn" id="send-btn"><i class="fas fa-location-arrow"></i></button>
     </div>
     {{ Form::close() }}
 </div>
