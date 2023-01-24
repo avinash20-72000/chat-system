@@ -18,6 +18,9 @@
     <div class="message-body">
         @if (request()->id)
             @include('chat.message')
+
+        @else
+            <img src="{{url('img/chat.png')}}" id="chat-img" alt="chat-img">
         @endif
     </div>
 @endsection

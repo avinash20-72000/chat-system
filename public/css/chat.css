@@ -2,7 +2,6 @@
 
 body,
 html {
-    height: 100%;
     margin: 0;
     background: #7F7FD5;
     background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
@@ -72,12 +71,30 @@ html {
     overflow: auto;
 }
 
+.chat::-webkit-scrollbar, .msg_card_body::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+  }
+  
+.chat::-webkit-scrollbar-track, .msg_card_body::-webkit-scrollbar-track {
+    background: #36302400;        /* color of the tracking area */
+  }
+  
+.chat::-webkit-scrollbar-thumb, .msg_card_body::-webkit-scrollbar-thumb {
+    background-color: #91EAE4;
+    border-radius: 66px;
+    border: 3px solid #515252;
+  }
+
 /* message box */
 .message-body{
     margin-left: 25px;
     width: 76%;
     background: #4d5483;
     border-radius: 15px;
+}
+
+#chat-img{
+    margin-left:  210px;
 }
 
 .main-message-box{
@@ -188,9 +205,10 @@ html {
     background-color: rgba(0, 0, 0, 0.3) !important;
     border: 0 !important;
     color: white !important;
-    height: 45px !important;
+    height: 46px !important;
     overflow-y: auto;
     width: 100%;
+    resize: none;
 }
 
 .type_msg:focus {

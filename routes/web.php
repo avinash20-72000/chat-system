@@ -26,11 +26,11 @@ Route::group(['middleware'=>['auth']],function()
     Route::post('role/assign',              [UserController::class,'assignRoles'])->name('assignRole');
 
     Route::get('dashboard',                 [DashboardController::class,'dashboard'])->name('adminDashboard');
-    Route::get('/admin-user',                         [DashboardController::class,'dashboard'])->name('dashboard');
+    Route::get('/admin-user',               [DashboardController::class,'dashboard'])->name('dashboard');
 
     //chat
 
-    Route::get('/chat-user',                [ChatController::class,'chats'])->name('chatUsers');
+    Route::get('/',                         [ChatController::class,'chats'])->name('chatUsers');
     Route::get('message-box/{id?}',         [ChatController::class,'messageBox'])->name('messageBox');
     Route::post('message',                  [ChatController::class,'saveMessage'])->name('saveMessage');
     Route::get('get/user',                  [ChatController::class,'getUsers'])->name('getUsers');
