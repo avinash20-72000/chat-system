@@ -1,8 +1,3 @@
-{{-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
-<!------ Include the above in your HEAD tag ---------->
-
 <!DOCTYPE html>
 <html>
 
@@ -24,7 +19,7 @@
             <p class="logo">Chat | System</p>
             <ul>
                 <li><a href="#"><i class="fa fa-bell"></i></li></a>
-                <li><a href="#">Profile</a></li>
+                <li><a href="$">Profile</a></li>
                 <li>
                     {{ Form::open(['method' => 'POST', 'route' => 'logout']) }}
                     @csrf
@@ -55,16 +50,23 @@
         $("#send-btn").attr("disabled", true);
     });
 
+    // fixed issue of empty message send
     $('#text').on('input', function(e) {
         if ($('#text').val().length != 0 && $("#text").val().replace(/^\s+|\s+$/g, "").length != 0) {
-            $("#send-btn").removeAttr("disabled");
+            $("#send-btn").removeAttr("disabled");  
         } else {
             $("#send-btn").attr("disabled", true);
-
         }
     });
+
+    // scroll chat 
+    $(".msg_card_body").animate({
+        scrollTop: $('.msg_card_body').get(0).scrollHeight
+    });
+
+    //notifications
     
-    
+
     var path = "{{ url('get/user') }}";
     var chatRoute = "{{ route('messageBox', ':id') }}";
     $('#user_name').typeahead({
