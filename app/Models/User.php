@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Messages;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -14,6 +15,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     private $rolesCache; 
+    public $image_path              =   "image/user/";
 
     /**
      * The attributes that are mass assignable.
@@ -52,6 +54,26 @@ class User extends Authenticatable
         static::addGlobalScope('is_active', function (Builder $builder) {
             $builder->where('users.is_active', '=', 1);
         });
+    }
+
+    public function getImagePath()
+    {// check file exist then return default image.
+        
+        if ($this->hasImage()) {
+            return url("user/picture/$this->image");
+        } else {
+            return url('/img/user.png');
+        }
+    }
+
+    public function hasImage()
+    {
+        if(empty($this->image)) return FALSE;
+        if (Storage::exists($this->image_path.$this->image))
+        {
+            return TRUE;
+        }
+        return FALSE;
     }
 
     public function roles() {

@@ -23,9 +23,10 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        $email = empty(request()->email) ? 0 : request()->email;
         return [
             'name'      =>  'required',
-            'email'     => 'required|string|max:255|unique:users,email,',
+            'email'     =>  'required|string|max:255|unique:users,email,'.$email.',email',
         ];
     }
 }

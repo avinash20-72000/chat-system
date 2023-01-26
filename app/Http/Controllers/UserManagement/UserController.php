@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\UserManagement;
 
+use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -14,7 +16,7 @@ class UserController extends Controller
     {
         $data['users']          =   User::paginate(10);
 
-        return view('admin.UserManagement.User.index',$data);
+        return view('admin.UserManagement.User.index', $data);
     }
 
     public function create()
@@ -23,20 +25,19 @@ class UserController extends Controller
         $data['submitRoute']    =   'user.store';
         $data['method']         =   'POST';
 
-        return view('admin.UserManagement.User.form',$data);
+        return view('admin.UserManagement.User.form', $data);
     }
 
     public function store(UserRequest $request)
     {
         $user                   =   new User();
-        $user->name             =   $request->name;      
+        $user->name             =   $request->name;
         $user->email            =   $request->email;
-        // $user->password         =   'Welcome@123';
-        $user->is_active        =   empty($request->is_active) ? 0 : 1;  
-        $user->is_admin         =   empty($request->is_admin) ? 0 : 1;  
+        $user->is_active        =   empty($request->is_active) ? 0 : 1;
+        $user->is_admin         =   empty($request->is_admin) ? 0 : 1;
         $user->save();
-        
-        return redirect(route('user.index'))->with('success','User Created');
+
+        return redirect(route('user.index'))->with('success', 'User Created');
     }
 
     public function show($id)
@@ -47,24 +48,37 @@ class UserController extends Controller
     public function edit($id)
     {
         $data['user']           =   User::findOrFail($id);
-        $data['submitRoute']    =   ['user.update',['user'=>$id]];
+        $data['submitRoute']    =   ['user.update', ['user' => $id]];
         $data['method']         =   'PUT';
         $data['roles']          =   Role::all();
 
-        return view('admin.UserManagement.User.form',$data);
+        return view('admin.UserManagement.User.form', $data);
     }
 
     public function update(UserRequest $request, $id)
     {
         $user                   =   User::findOrFail($id);
-        $user->name             =   $request->name;      
+        $user->name             =   $request->name;
         $user->email            =   $request->email;
-        // $user->password         =   'Welcome@123';
-        $user->is_active        =   empty($request->is_active) ? 0 : 1;          
-        $user->is_admin         =   empty($request->is_admin) ? 0 : 1;  
+        $user->is_active        =   empty($request->is_active) ? 0 : 1;
+        $user->is_admin         =   empty($request->is_admin) ? 0 : 1;
+
+        if ($request->hasFile('image')) {
+            if (!empty($user->image)) {
+                $fileName   = 'image/user/' . $user->image;
+                // if (Storage::exists($fileName)) {
+                    Storage::delete($fileName);
+                // }    
+            }
+            $userImage = request()->name . Carbon::now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
+            $userImage = $request->file('image')->move(storage_path('app/image/user'), $userImage);
+        }
+        $user->image            =   $userImage;
+        $user->age              =   $request->age;
+        $user->gender           =   $request->gender;
         $user->update();
-        
-        return redirect(route('user.index'))->with('success','User Updated');
+
+        return redirect(route('user.index'))->with('success', 'User Updated');
     }
 
     public function destroy($id)
