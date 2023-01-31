@@ -1,10 +1,11 @@
 <div class="msg_head">
     <div class="img_cont">
-        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+        <img src="{{ $user->getImagePath() }}" class="rounded-circle user_img">
         <span class="online_icon"></span>
     </div>
+    
     <div class="user_info">
-        <span>{{ ucFirst($userName) }}</span>
+        <span>{{ ucFirst($user->name) }}</span>
         <p>1767 Messages</p>
     </div>
     <div class="video_cam">
@@ -38,7 +39,7 @@
             <div class="{{ $position }}">
                 <div class="{{ $img }}">
                     @if ($message->sender_id != auth()->user()->id)
-                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                        <img src="{{ $user->getImagePath() }}"
                             class="rounded-circle user_img_msg">
                     @endif
                 </div>

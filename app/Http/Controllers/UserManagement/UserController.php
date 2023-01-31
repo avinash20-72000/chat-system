@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller
 {
@@ -66,12 +67,12 @@ class UserController extends Controller
         if ($request->hasFile('image')) {
             if (!empty($user->image)) {
                 $fileName   = 'image/user/' . $user->image;
-                // if (Storage::exists($fileName)) {
+                if (Storage::exists($fileName)) {
                     Storage::delete($fileName);
-                // }    
+                }    
             }
             $userImage = request()->name . Carbon::now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
-            $userImage = $request->file('image')->move(storage_path('app/image/user'), $userImage);
+            $request->file('image')->move(storage_path('app/image/user'), $userImage);
         }
         $user->image            =   $userImage;
         $user->age              =   $request->age;
@@ -96,5 +97,13 @@ class UserController extends Controller
         }
         $user->roles()->sync($roles);
         return redirect()->back()->with('success', 'Role Assigned Successful');
+    }
+
+    public function getImage($fileName)
+    {
+        $path       =  storage_path().'/app/image/user/'.$fileName;
+        $filedata   =  file_get_contents($path);
+        
+        return Response::make($filedata);
     }
 }

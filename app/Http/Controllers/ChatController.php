@@ -37,7 +37,7 @@ class ChatController extends Controller
             $data['message']        =   new Messages();
             $data['method']         =   'POST';
             $data['submitRoute']    =   'saveMessage';
-            $data['userName']       =   $sendMessage->name;
+            $data['user']           =   $sendMessage;
         }
 
 

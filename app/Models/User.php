@@ -60,7 +60,7 @@ class User extends Authenticatable
     {// check file exist then return default image.
         
         if ($this->hasImage()) {
-            return url("user/picture/$this->image");
+            return url("picture/$this->image");
         } else {
             return url('/img/user.png');
         }

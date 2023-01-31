@@ -24,6 +24,7 @@ Route::group(['middleware'=>['auth']],function()
     Route::resource('permission',           PermissionController::class);
     Route::resource('module',               ModuleController::class);
     Route::post('role/assign',              [UserController::class,'assignRoles'])->name('assignRole');
+    Route::get('/picture/{fileName}',       [UserController::class,'getImage']);
 
     Route::get('dashboard',                 [DashboardController::class,'dashboard'])->name('dashboard');
 
