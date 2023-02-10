@@ -1,12 +1,18 @@
 <div class="msg_head">
     <div class="img_cont">
         <img src="{{ $user->getImagePath() }}" class="rounded-circle user_img">
-        <span class="online_icon"></span>
+        @if($user->online_status == 'online')
+            <span class="online_icon"></span>
+        @endif
     </div>
     
     <div class="user_info">
         <span>{{ ucFirst($user->name) }}</span>
-        <p>1767 Messages</p>
+        @if($user->online_status == 'online')
+            <p>Active now</p>
+        @else
+            <p>{{ !empty($user->logout) ? "Last seen " . \Carbon\Carbon::parse($user->logout)->diffForHumans() : ''  }}</p>
+        @endif
     </div>
     <div class="video_cam">
         <span><i class="fas fa-video"></i></span>

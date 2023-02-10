@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UserManagement\UserController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -71,8 +72,10 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        $user->last_login_at = Carbon::now();
-        $user->save();
+        $user->last_login_at    =   Carbon::now();
+        $user->save(); 
+        $userController  = new UserController();
+        $userController->storeStatus(auth()->user()->id,'online',null);
     }
 
     public function logout(Request $request)

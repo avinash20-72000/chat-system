@@ -25,6 +25,8 @@ Route::group(['middleware'=>['auth']],function()
     Route::resource('module',               ModuleController::class);
     Route::post('role/assign',              [UserController::class,'assignRoles'])->name('assignRole');
     Route::get('/picture/{fileName}',       [UserController::class,'getImage']);
+    Route::get('/online/status',            [UserController::class,'onlineStatus'])->name('onlineStatus');
+    Route::post('/store/status',            [UserController::class,'storeStatus'])->name('storeStatus');
 
     Route::get('dashboard',                 [DashboardController::class,'dashboard'])->name('dashboard');
 

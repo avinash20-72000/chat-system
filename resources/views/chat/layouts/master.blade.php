@@ -42,6 +42,18 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
 <script>
+
+    setInterval(function() {
+        $.ajax({
+                url: "{{ route('onlineStatus') }}",
+                type: 'get',
+                dataType: 'json',
+                success: function(response) {
+                    console.log('hi');
+                }
+            });
+    }, 2000);
+
     $(document).ready(function() {
         $('#action_menu_btn').click(function() {
             $('.action_menu').toggle();
@@ -95,14 +107,14 @@
     });
 
 
-    // user search fixed position
+    // chat scroll 
     window.onscroll = function() {
-        myFunction()
+        scrollChat()
     };
     var header = $("#fixheader");
     var sticky = header.offsetTop;
 
-    function myFunction() {
+    function scrollChat() {
         if ($(this).scrollTop() > 400 && $(this).width() >= 320) {
             header.addClass("sticky").removeClass("sticky-down");
         } else {

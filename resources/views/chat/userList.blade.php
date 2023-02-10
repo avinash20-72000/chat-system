@@ -10,11 +10,15 @@
                         <div class="img_cont">
                             <img src="{{ $user->getImagePath() }}"
                                 class="rounded-circle user_img">
-                            <span class="online_icon"></span>
+                            @if($user->online_status == 'online')
+                                <span class="online_icon"></span>
+                            @endif
                         </div>
                         <div class="user_info">
                             <span>{{ucFirst($user->name)}}</span>
-                            <p>{{ucFirst($user->name)}} is online</p>
+                            @if($user->online_status == 'online')
+                                <p>{{ucFirst($user->name)}} is online</p>
+                            @endif
                         </div>
                     </div>
                 </li>

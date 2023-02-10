@@ -20,10 +20,10 @@ class ChatController extends Controller
                                             $query->where('sender_id', auth()->user()->id)->where('receiver_id', $sendMessage->id);
                                         })->orWhere(function ($query1) use ($sendMessage) {
                                             $query1->where('sender_id', $sendMessage->id)->where('receiver_id', auth()->user()->id);
-                                        })->get();
-            if ($chat->isNotEmpty()) {
-                $messages           =   $chat[0]->messages;
-                $chatId             =   $chat[0]->id;
+                                        })->first();
+            if (!empty($chat)) {
+                $messages           =   $chat->messages;
+                $chatId             =   $chat->id;
             } else {
                 $chat               =   new Chat();
                 $chat->sender_id    =   auth()->user()->id;

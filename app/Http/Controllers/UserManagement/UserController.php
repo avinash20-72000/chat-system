@@ -106,4 +106,22 @@ class UserController extends Controller
         
         return Response::make($filedata);
     }
+
+    public function storeStatus($id,$status,$logout)
+    {
+        $user                   =   User::findOrFail($id);
+        $user->online_status    =   $status;
+        if(!empty($logout))
+        {
+            $user->logout       =   $logout;
+        }
+        $user->save();
+
+        return;
+    }
+
+    public function onlineStatus(Request $request)
+    {
+        dd( $request->session()->get('online_status'));
+    }
 }
