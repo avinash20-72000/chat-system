@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserManagement\DashboardController;
+use App\Http\Controllers\TwoFAController;
 use App\Http\Controllers\UserManagement\RoleController;
 use App\Http\Controllers\UserManagement\UserController;
 use App\Http\Controllers\UserManagement\ModuleController;
+use App\Http\Controllers\UserManagement\DashboardController;
 use App\Http\Controllers\UserManagement\PermissionController;
 
 
@@ -38,4 +39,8 @@ Route::group(['middleware'=>['auth']],function()
     Route::get('get/user',                  [ChatController::class,'getUsers'])->name('getUsers');
 });
 
+// Authentication
+Route::get('2fa',                           [TwoFAController::class,'index'])->name('2fa.index');
+Route::post('2fa',                          [TwoFAController::class,'store'])->name('2fa.post');
+Route::get('2fa/reset',                     [TwoFAController::class,'resend'])->name('2fa.resend');
 

@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use App\Models\Messages;
+use App\Mail\SendCodeMail;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
@@ -141,5 +144,29 @@ class User extends Authenticatable
     public function messages()
     {
         return $this->hasMany(Messages::class, 'sender_id');
+    }
+
+    public function generateCode()
+    {
+        $code = rand(1000, 9999);
+
+        UserCode::updateOrCreate(
+                    [ 'user_id' => auth()->user()->id ],
+                    [ 'code' => $code ]
+                );
+
+        try {
+            $details = [
+                'title' => 'Your two factor authentication code is:',
+                'code' => $code
+            ];
+
+            $message            = (new SendCodeMail($details))->onQueue('emails');
+            Mail::to(auth()->user()->email)->later(now()->addSeconds(1), $message);
+            Session::put('user_2fa_sent', now());
+
+        } catch (Exception $e) {
+            info("Error: ". $e->getMessage());
+        }
     }
 }
