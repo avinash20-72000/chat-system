@@ -11,7 +11,18 @@ class ChatController extends Controller
 {
     public function chats($user = false)
     {
-        $data['users']  =  User::where('id', '<>', auth()->user()->id)->get();
+
+        $allUsers           =   User::select('users.id','users.name','users.online_status','users.image', 'messages.created_at')
+                                    ->leftJoin('messages','messages.sender_id','users.id')
+                                    ->where('users.id', '<>', auth()->user()->id)->orderBy('messages.created_at','desc')->get()->groupBy('name');
+// dd($allUsers);
+        $users              =   [];
+        foreach($allUsers as $key=>$dataUsers)
+        {
+            $users[$key] =   $dataUsers->first();
+        }
+
+        $data['users']              =     $users;
 
         if (request()->id) {
 
