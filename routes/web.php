@@ -26,6 +26,9 @@ Route::group(['middleware'=>['auth']],function()
     Route::resource('module',               ModuleController::class);
     Route::post('role/assign',              [UserController::class,'assignRoles'])->name('assignRole');
     Route::get('/picture/{fileName}',       [UserController::class,'getImage']);
+    Route::get('/trash'             ,       [UserController::class,'trashList'])->name('trashList');
+    Route::get('/restore/{id}',             [UserController::class,'restore'])->name('restoreUser');
+    Route::get('/force/delete/{id}',        [UserController::class,'forceDelete'])->name('forceDeleteUser');
     Route::get('/online/status',            [UserController::class,'onlineStatus'])->name('onlineStatus');
     Route::post('/store/status',            [UserController::class,'storeStatus'])->name('storeStatus');
 

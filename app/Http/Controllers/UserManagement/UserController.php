@@ -15,7 +15,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $data['users']          =   User::paginate(10);
+        $data['users']          =   User::withoutGlobalScopes()->paginate(10);
 
         return view('admin.UserManagement.User.index', $data);
     }
@@ -84,7 +84,32 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        User::findOrFail($id)->delete();
+        $user = User::findOrFail($id);
+        $user->update(['is_active'=>0]);
+        $user->delete();
+    }
+
+    public function trashList()
+    {
+        $data['trashUsers']     =    User::withoutGlobalScopes()->onlyTrashed()->get();
+
+        return view('admin.UserManagement.User.trash',$data);
+    }
+
+    public function restore($id)
+    {
+        $user       =   User::withoutGlobalScopes()->withTrashed()->findOrFail($id);
+        $user->update(['is_active'=>1]);
+        $user->restore();
+
+        return back()->with('success','User Restore');
+    }
+
+    public function forceDelete($id)
+    {
+        User::withTrashed()->find($id)->forceDelete();
+
+        return back()->with('success','User Delete');
     }
 
     public function assignRoles(Request $request)

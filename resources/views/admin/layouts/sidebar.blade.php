@@ -54,6 +54,13 @@
                                 <p>Module</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('trashList') }}"
+                                class="nav-link {{ str_contains(request()->path(), 'trash') ? 'active' : '' }} )">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Trash User</p>
+                            </a>
+                        </li>
 
                     </ul>
                 </li>
