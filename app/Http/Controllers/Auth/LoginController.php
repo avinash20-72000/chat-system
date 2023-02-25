@@ -80,6 +80,8 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        $userController  = new UserController();
+        $userController->storeStatus(auth()->user()->id,'offline',Carbon::now());
         $this->performLogout($request);
         return redirect()->route('login');
     }
