@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url('plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
 </head>
 
 @yield('chat-link')
@@ -19,7 +20,11 @@
             <p class="logo">Chat | System</p>
             <ul>
                 <li><a href="#"><i class="fa fa-bell"></i></li></a>
-                <li><a href="$">Profile</a></li>
+                @if(request()->is('profile/'.auth()->user()->id))
+                    <li><a href="{{route('chatUsers')}}">Chat</a></li>
+                @else
+                    <li><a href="{{route('profile',['id' => auth()->user()->id])}}">Profile</a></li>
+                @endif
                 <li>
                     {{ Form::open(['method' => 'POST', 'route' => 'logout']) }}
                     @csrf
@@ -41,18 +46,19 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js">
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
+<script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 <script>
 
-    setInterval(function() {
-        $.ajax({
-                url: "{{ route('onlineStatus') }}",
-                type: 'get',
-                dataType: 'json',
-                success: function(response) {
-                    console.log('hi');
-                }
-            });
-    }, 2000);
+    // setInterval(function() {
+    //     $.ajax({
+    //             url: "{{ route('onlineStatus') }}",
+    //             type: 'get',
+    //             dataType: 'json',
+    //             success: function(response) {
+    //                 console.log('hi');
+    //             }
+    //         });
+    // }, 2000);
 
     $(document).ready(function() {
         $('#action_menu_btn').click(function() {
@@ -106,6 +112,24 @@
         }
     });
 
+    $(function() {
+            @if ($message = Session::get('success'))
+                toastr.success('{{ $message }}');
+            @endif
+            @if ($message = Session::get('failure'))
+                toastr.error('{{ $message }}');
+            @endif
+            @if ($message = Session::get('warning'))
+                toastr.warning('{{ $message }}');
+            @endif
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    toastr.warning('{{ $error }}');
+                @endforeach
+            @endif
+
+        });
+
 
     // chat scroll 
     window.onscroll = function() {
@@ -121,6 +145,7 @@
             header.removeClass("sticky").addClass("sticky-down");
         }
     };
+
 </script>
 @yield('chat-script')
 

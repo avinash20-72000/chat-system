@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Chat;
 use App\Models\User;
 use App\Models\Messages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ChatController extends Controller
 {
@@ -75,6 +77,39 @@ class ChatController extends Controller
         send_notification($request->receiver_id, 'You have a new message from' .  auth()->user()->name, $link, 'new message');
 
         return back();
+    }
+
+    public function profile($id)
+    {
+        $data['user']           =   User::findOrFail($id);
+        $data['method']         =   'POST';
+        $data['submitRoute']    =   ['storeProfile',['id'=>$id]];
+        
+        return view('chat.profile',$data);
+    }
+
+    public function storeProfile(Request $request,$id)
+    {
+        $user           =    User::findOrFail($id);
+        $user->name     =    $request->name;
+        $user->email    =    $request->email;
+        $user->age      =    $request->age;
+        $user->gender   =    $request->gender;
+        $user->bio      =    $request->bio;
+        if ($request->hasFile('image')) {
+            if (!empty($user->image)) {
+                $fileName   = 'image/user/' . $user->image;
+                if (Storage::exists($fileName)) {
+                    Storage::delete($fileName);
+                }    
+            }
+            $userImage = request()->name . Carbon::now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(storage_path('app/image/user'), $userImage);
+            $user->image            =   $userImage;
+        }
+        $user->save();
+
+        return back()->with('success','Profile Updated');
     }
 
     public function getUsers(Request $request)

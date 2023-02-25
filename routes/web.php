@@ -37,6 +37,8 @@ Route::group(['middleware'=>['auth']],function()
     Route::get('message-box/{id?}',         [ChatController::class,'messageBox'])->name('messageBox');
     Route::post('message',                  [ChatController::class,'saveMessage'])->name('saveMessage');
     Route::get('get/user',                  [ChatController::class,'getUsers'])->name('getUsers');
+    Route::get('profile/{id}',              [ChatController::class,'profile'])->name('profile');
+    Route::post('store/profile/{id}',       [ChatController::class,'storeProfile'])->name('storeProfile');
 });
 
 // Authentication

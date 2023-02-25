@@ -73,8 +73,8 @@ class UserController extends Controller
             }
             $userImage = request()->name . Carbon::now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
             $request->file('image')->move(storage_path('app/image/user'), $userImage);
+            $user->image            =   $userImage;
         }
-        $user->image            =   $userImage;
         $user->age              =   $request->age;
         $user->gender           =   $request->gender;
         $user->update();
