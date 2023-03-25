@@ -13,7 +13,8 @@ class ChatController extends Controller
 {
     public function chats($user = false)
     {
-
+        $this->authorize('view',new Chat());
+        
         $allUsers           =   User::select('users.id','users.name','users.online_status','users.image', 'messages.created_at')
                                     ->leftJoin('messages','messages.sender_id','users.id')
                                     ->where('users.id', '<>', auth()->user()->id)->orderBy('messages.created_at','desc')->get()->groupBy('name');

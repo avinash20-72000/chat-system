@@ -5,7 +5,9 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Module Table</h3>
-                <a class="card-tools" href="{{route('module.create')}}"><i class="fas fa-plus"></i></a>
+                @can('create',new App\Models\Module())
+                    <a class="card-tools" href="{{route('module.create')}}"><i class="fas fa-plus"></i></a>
+                @endcan
             </div>
             <div class="card-body">
                 <table class="table table-bordered">
@@ -13,7 +15,9 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>Name</th>
-                            <th>Action</th>
+                            @canany(['update','delete'],new App\Models\Module())
+                                <th>Action</th>
+                            @endcanany
                         </tr>
                     </thead>
                     <tbody>
@@ -21,10 +25,16 @@
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{ucFirst($module->name)}}</td>
-                            <td>
-                                <a href="{{route("module.edit",['module'=>$module->id])}}"><i class="fas fa-edit"></i></a>&nbsp;
-                                <a onclick='deleteItem("{{route("module.destroy",["module"=>$module->id])}}")'><i class="fas fa-trash text-red"></i></a>
-                            </td>
+                            @canany(['update','delete'],new App\Models\Module())
+                                <td>
+                                    @can('update',new App\Models\Module())
+                                        <a href="{{route("module.edit",['module'=>$module->id])}}"><i class="fas fa-edit"></i></a>&nbsp;
+                                    @endcan
+                                    @can('delete',new App\Models\Module())
+                                        <a onclick='deleteItem("{{route("module.destroy",["module"=>$module->id])}}")'><i class="fas fa-trash text-red"></i></a>
+                                    @endcan
+                                </td>
+                            @endcanany
                         </tr>
                         @endforeach
                     </tbody>

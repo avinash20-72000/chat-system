@@ -31,6 +31,7 @@ Route::group(['middleware'=>['auth']],function()
     Route::get('/force/delete/{id}',        [UserController::class,'forceDelete'])->name('forceDeleteUser');
     Route::get('/online/status',            [UserController::class,'onlineStatus'])->name('onlineStatus');
     Route::post('/store/status',            [UserController::class,'storeStatus'])->name('storeStatus');
+    Route::post('/permission/assign',       [RoleController::class,'assignPermissions'])->name('assignPermissions');
 
     Route::get('dashboard',                 [DashboardController::class,'dashboard'])->name('dashboard');
 

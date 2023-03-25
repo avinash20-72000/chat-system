@@ -4,7 +4,9 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">User List</h3>
-                <p class="card-tools"><a href="{{ route('user.create') }} "><i class="fa  fa-plus"></i></a></p>
+                @can('create',new app\Models\User())
+                    <p class="card-tools"><a href="{{ route('user.create') }} "><i class="fa  fa-plus"></i></a></p>
+                @endcan
             </div>
 
             <div class="card-body">
@@ -15,7 +17,9 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th style="width: 40px">Active</th>
-                            <th>Action</th>
+                            @canany(['update','delete'],new app\Models\User())
+                                <th>Action</th>
+                            @endcanany
                         </tr>
                     </thead>
                     <tbody>
@@ -31,10 +35,16 @@
                                         <i class="fa fa-times-circle text-red"></i>
                                     @endif
                                 </td>
-                                <td>
-                                    <a href="{{route('user.edit',['user'=>$user->id])}}"><i class="fa fa-edit"></i></a>
-                                    <a onclick='deleteItem("{{route("user.destroy",["user"=>$user->id])}}")'><i class="fa fa-trash text-red"></i></a>
-                                </td>
+                                @canany(['update','delete'],new app\Models\User())
+                                    <td>
+                                        @can('update',new app\Models\User())
+                                            <a href="{{route('user.edit',['user'=>$user->id])}}"><i class="fa fa-edit"></i></a>
+                                        @endcan
+                                        @can('delete',new app\Models\User())
+                                            <a onclick='deleteItem("{{route("user.destroy",["user"=>$user->id])}}")'><i class="fa fa-trash text-red"></i></a>
+                                        @endcan
+                                    </td>
+                                @endcanany
                             </tr>
                         @endforeach
                     </tbody>

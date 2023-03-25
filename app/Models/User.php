@@ -25,13 +25,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'is_active'
-    ];
-
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    //     'is_active'
+    // ];
+        protected $guarded  =   ['id'];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -99,9 +99,12 @@ class User extends Authenticatable
     public function hasPermission($moduleName, $access = null)
     {
         // do not check for permission if the user is admin
-        if ($this->hasRole('Admin')) {
+        if (isset($this->is_admin)) {
             return TRUE;
         }
+        // if ($this->hasRole('Admin')) {
+        //     return TRUE;
+        // }
         if (empty(Module::$cache)) {
             Module::$cache = Module::all()->map(function ($item) {
                 $item->name = strtolower($item->name);

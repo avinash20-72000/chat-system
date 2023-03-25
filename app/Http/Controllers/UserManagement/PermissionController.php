@@ -12,6 +12,8 @@ class PermissionController extends Controller
 {
     public function index()
     {
+        $this->authorize('view', new Permission());
+
         $data['permissions']            =   Permission::with('module')->paginate(10);
 
         return view('admin.UserManagement.Permission.index',$data);
@@ -19,7 +21,10 @@ class PermissionController extends Controller
 
     public function create()
     {
-        $data['permission']             =   new Permission();
+        $permission                     =   new Permission();
+        $this->authorize('create', $permission);
+
+        $data['permission']             =   $permission;
         $data['submitRoute' ]           =   'permission.store';
         $data['method']                 =   'POST';
         $data['modules']                =   Module::pluck('name','id')->toArray();
@@ -30,6 +35,8 @@ class PermissionController extends Controller
     public function store(PermissionRequest $request)
     {
         $permission                     =   new Permission();
+        $this->authorize('create', $permission);
+
         $permission->name               =   $request->name;
         $permission->module_id          =   $request->module_id;
         $permission->save();
@@ -44,6 +51,8 @@ class PermissionController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('update', new Permission());
+
         $data['permission']             =   Permission::findOrFail($id);
         $data['submitRoute' ]           =   ['permission.update',['permission'=>$id]];
         $data['method']                 =   'PUT';
@@ -54,6 +63,8 @@ class PermissionController extends Controller
 
     public function update(PermissionRequest $request, $id)
     {
+        $this->authorize('update', new Permission());
+
         $permission                     =   Permission::findOrFail($id);
         $permission->name               =   $request->name;
         $permission->module_id          =   $request->module_id;
@@ -64,6 +75,7 @@ class PermissionController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('delete', new Permission());
         Permission::findOrFail($id)->delete();
     }
 }

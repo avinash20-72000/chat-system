@@ -12,6 +12,8 @@ class RoleController extends Controller
 {
     public function index()
     {
+        $this->authorize('view', new Role());
+
         $data['roles']          =   Role::paginate(10);
 
         return view('admin.UserManagement.Role.index',$data);
@@ -19,7 +21,10 @@ class RoleController extends Controller
 
     public function create()
     {
-        $data['role']           =   new Role();
+        $role                   =   new Role();
+        $this->authorize('create', $role);
+
+        $data['role']           =   $role;
         $data['submitRoute' ]   =   'role.store';
         $data['method']         =   'POST';
 
@@ -29,6 +34,8 @@ class RoleController extends Controller
     public function store(RoleRequest $request)
     {
         $role                   =   new Role();
+        $this->authorize('create', $role);
+
         $role->name             =   $request->name;
         $role->save();
 
@@ -42,6 +49,8 @@ class RoleController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('update', new Role());
+
         $data['role']           =   Role::findOrFail($id);
         $data['submitRoute' ]   =   ['role.update',['role'=>$id]];
         $data['method']         =   'PUT';
@@ -52,6 +61,8 @@ class RoleController extends Controller
 
     public function update(RoleRequest $request, $id)
     {
+        $this->authorize('update', new Role());
+
         $role                   =   Role::findOrFail($id);
         $role->name             =   $request->name;
         $role->update();
@@ -61,12 +72,15 @@ class RoleController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('delete', new Role());
+
         Role::findOrFail($id)->delete();
-        
     }
 
     public function assignPermissions(Request $request)
     {
+        $this->authorize('create', new Role());
+
         $roleId                = $request->input('role');
         $role                  = Role::findOrFail($roleId);
         $permissions           = $request->input('permission');// return array of permission id

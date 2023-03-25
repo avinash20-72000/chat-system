@@ -26,27 +26,34 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('user.index') }}"
-                                class="nav-link {{ str_contains(request()->path(), 'user') ? 'active' : '' }} )">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>User</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('role.index') }}"
-                                class="nav-link {{ str_contains(request()->path(), 'role') ? 'active' : '' }} )">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Role</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('permission.index') }}"
-                                class="nav-link {{ str_contains(request()->path(), 'permission') ? 'active' : '' }} )">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Permission</p>
-                            </a>
-                        </li>
+                        @can('view',new App\Models\User())
+                            <li class="nav-item">
+                                <a href="{{ route('user.index') }}"
+                                    class="nav-link {{ str_contains(request()->path(), 'user') ? 'active' : '' }} )">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>User</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('view',new App\Models\Role())
+                            <li class="nav-item">
+                                <a href="{{ route('role.index') }}"
+                                    class="nav-link {{ str_contains(request()->path(), 'role') ? 'active' : '' }} )">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Role</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('view',new App\Models\Permission())
+                            <li class="nav-item">
+                                <a href="{{ route('permission.index') }}"
+                                    class="nav-link {{ str_contains(request()->path(), 'permission') ? 'active' : '' }} )">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Permission</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('view',new App\Models\Module())
                         <li class="nav-item">
                             <a href="{{ route('module.index') }}"
                                 class="nav-link {{ str_contains(request()->path(), 'module') ? 'active' : '' }} )">
@@ -54,14 +61,16 @@
                                 <p>Module</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('trashList') }}"
-                                class="nav-link {{ str_contains(request()->path(), 'trash') ? 'active' : '' }} )">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Trash User</p>
-                            </a>
-                        </li>
-
+                        @endcan
+                        @can('restore',new App\Models\Role())
+                            <li class="nav-item">
+                                <a href="{{ route('trashList') }}"
+                                    class="nav-link {{ str_contains(request()->path(), 'trash') ? 'active' : '' }} )">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Trash User</p>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
                 <li class="nav-item">

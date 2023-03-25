@@ -15,6 +15,8 @@ class UserController extends Controller
 {
     public function index()
     {
+        $this->authorize('view', new User());
+
         $data['users']          =   User::withoutGlobalScopes()->paginate(10);
 
         return view('admin.UserManagement.User.index', $data);
@@ -22,7 +24,10 @@ class UserController extends Controller
 
     public function create()
     {
-        $data['user']           =   new User();
+        $user                   =   new User();   
+        $this->authorize('create', $user);
+
+        $data['user']           =   $user;
         $data['submitRoute']    =   'user.store';
         $data['method']         =   'POST';
 
@@ -32,6 +37,8 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $user                   =   new User();
+        $this->authorize('create', $user);
+
         $user->name             =   $request->name;
         $user->email            =   $request->email;
         $user->is_active        =   empty($request->is_active) ? 0 : 1;
@@ -48,6 +55,8 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('update', new User());
+
         $data['user']           =   User::findOrFail($id);
         $data['submitRoute']    =   ['user.update', ['user' => $id]];
         $data['method']         =   'PUT';
@@ -58,6 +67,8 @@ class UserController extends Controller
 
     public function update(UserRequest $request, $id)
     {
+        $this->authorize('update', new User());
+
         $user                   =   User::findOrFail($id);
         $user->name             =   $request->name;
         $user->email            =   $request->email;
@@ -84,6 +95,8 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('delete', new User());
+
         $user = User::findOrFail($id);
         $user->update(['is_active'=>0]);
         $user->delete();
@@ -91,13 +104,17 @@ class UserController extends Controller
 
     public function trashList()
     {
+        $this->authorize('restore', new User());
+
         $data['trashUsers']     =    User::withoutGlobalScopes()->onlyTrashed()->get();
 
         return view('admin.UserManagement.User.trash',$data);
     }
 
     public function restore($id)
-    {
+    {       
+        $this->authorize('restore', new User());
+ 
         $user       =   User::withoutGlobalScopes()->withTrashed()->findOrFail($id);
         $user->update(['is_active'=>1]);
         $user->restore();
@@ -107,13 +124,17 @@ class UserController extends Controller
 
     public function forceDelete($id)
     {
+        $this->authorize('forceDelete', new User());
+
         User::withTrashed()->find($id)->forceDelete();
 
         return back()->with('success','User Delete');
     }
 
     public function assignRoles(Request $request)
-    {
+    {        
+        $this->authorize('create', new User());
+
         $userid         = $request->input('user');
         $user           = User::find($userid);
         $roles          = $request->input('role'); // array of role ids

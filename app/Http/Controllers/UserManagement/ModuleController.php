@@ -11,6 +11,8 @@ class ModuleController extends Controller
 {
     public function index()
     {
+        $this->authorize('view', new Module());
+
         $data['modules']            =   Module::paginate(10);
 
         return view('admin.UserManagement.Module.index', $data);
@@ -18,8 +20,11 @@ class ModuleController extends Controller
 
     public function create()
     {
-        $data['module']             =   new Module();
-        $data['submitRoute']       =   'module.store';
+        $module                     =   new Module();
+        $this->authorize('create', $module);
+
+        $data['module']             =   $module;
+        $data['submitRoute']        =   'module.store';
         $data['method']             =   'POST';
 
         return view('admin.UserManagement.Module.form', $data);
@@ -28,6 +33,8 @@ class ModuleController extends Controller
     public function store(ModuleRequest $request)
     {
         $module                     =   new Module();
+        $this->authorize('create', $module);
+
         $module->name               =   $request->name;
         $module->save();
 
@@ -41,15 +48,19 @@ class ModuleController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('update', new Module());
+
         $data['module']             =   Module::findOrFail($id);
         $data['submitRoute']       =   ['module.update', ['module' => $id]];
         $data['method']             =   'PUT';
 
-        return view('admin.UserManagement.mMdule.form', $data);
+        return view('admin.UserManagement.Module.form', $data);
     }
 
     public function update(ModuleRequest $request, $id)
     {
+        $this->authorize('update', new Module());
+
         $module                     =   Module::findOrFail($id);
         $module->name               =   $request->name;
         $module->update();
@@ -59,6 +70,8 @@ class ModuleController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('delete', new Module());
+
         Module::findOrFail($id)->delete();
     }
 }

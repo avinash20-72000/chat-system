@@ -5,7 +5,9 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Permission Table</h3>
-                <a class="card-tools" href="{{route('permission.create')}}"><i class="fas fa-plus"></i></a>
+                @can('create',new App\Models\Permission())
+                    <a class="card-tools" href="{{route('permission.create')}}"><i class="fas fa-plus"></i></a>
+                @endcan
             </div>
             <div class="card-body">
                 <table class="table table-bordered">
@@ -14,7 +16,9 @@
                             <th style="width: 10px">#</th>
                             <th>Module</th>
                             <th>Permission</th>
-                            <th>Action</th>
+                            @canany(['update','delete'],new App\Models\Permission())
+                                <th>Action</th>
+                            @endcanany
                         </tr>
                     </thead>
                     <tbody>
@@ -23,10 +27,16 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{ucFirst($permission->module->name)}}</td>
                             <td>{{ucFirst($permission->name)}}</td>
-                            <td>
-                                <a href="{{route("permission.edit",['permission'=>$permission->id])}}"><i class="fas fa-edit"></i></a>&nbsp;
-                                <a onclick='deleteItem("{{route("permission.destroy",["permission"=>$permission->id])}}")'><i class="fas fa-trash text-red"></i></a>
-                            </td>
+                            @canany(['update','delete'],new App\Models\Permission())
+                                <td>
+                                    @can('update',new App\Models\Permission())
+                                        <a href="{{route("permission.edit",['permission'=>$permission->id])}}"><i class="fas fa-edit"></i></a>&nbsp;
+                                    @endcan
+                                    @can('delete',new App\Models\Permission())
+                                        <a onclick='deleteItem("{{route("permission.destroy",["permission"=>$permission->id])}}")'><i class="fas fa-trash text-red"></i></a>
+                                    @endcan
+                                </td>
+                            @endcanany
                         </tr>
                         @endforeach
                     </tbody>

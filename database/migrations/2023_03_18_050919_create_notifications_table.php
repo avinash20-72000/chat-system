@@ -18,7 +18,7 @@ class CreateNotificationsTable extends Migration
             $table->integer('user_id');
             $table->text('message');
             $table->text('link');
-            $table->integer('read_on');
+            $table->integer('read_on')->nullable();
             $table->string('type');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
