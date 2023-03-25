@@ -62,6 +62,13 @@
                             </a>
                         </li>
                         @endcan
+                        <li class="nav-item">
+                            <a href="{{ route('roleAssign') }}"
+                                class="nav-link {{ request()->is('assign') ? 'active' : ''}} )">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Assign Role</p>
+                            </a>
+                        </li>
                         @can('restore',new App\Models\Role())
                             <li class="nav-item">
                                 <a href="{{ route('trashList') }}"

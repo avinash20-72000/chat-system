@@ -134,9 +134,8 @@ class UserController extends Controller
     public function assignRoles(Request $request)
     {        
         $this->authorize('create', new User());
-
         $userid         = $request->input('user');
-        $user           = User::find($userid);
+        $user           = User::with('roles')->find($userid);
         $roles          = $request->input('role'); // array of role ids
         if (empty($roles)) {
             $roles      = array();
@@ -164,6 +163,14 @@ class UserController extends Controller
         $user->save();
 
         return;
+    }
+
+    public function roleAssign()
+    {
+        $data['users']          =   User::pluck('name','id')->toArray();
+        $data['roles']          =   Role::all();
+
+        return view('admin.UserManagement.User.roleAssign',$data);
     }
 
     public function onlineStatus(Request $request)
