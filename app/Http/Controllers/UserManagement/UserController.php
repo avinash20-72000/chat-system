@@ -10,6 +10,7 @@ use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 class UserController extends Controller
 {
@@ -133,7 +134,7 @@ class UserController extends Controller
 
     public function assignRoles(Request $request)
     {        
-        $this->authorize('create', new User());
+        $this->authorize('assignRole', new User());
         $userid         = $request->input('user');
         $user           = User::with('roles')->find($userid);
         $roles          = $request->input('role'); // array of role ids
@@ -167,6 +168,8 @@ class UserController extends Controller
 
     public function roleAssign()
     {
+        $this->authorize('assignRole',new User());
+
         $data['users']          =   User::pluck('name','id')->toArray();
         $data['roles']          =   Role::all();
 
@@ -176,5 +179,14 @@ class UserController extends Controller
     public function onlineStatus(Request $request)
     {
         dd( $request->session()->get('online_status'));
+    }
+
+    public function laravelLogs()
+    {
+        if (in_array(strtolower(auth()->user()->email), User::$developers)) {
+            $log    =   new LogViewerController();
+            return $log->index();
+        }
+        return abort(403);
     }
 }

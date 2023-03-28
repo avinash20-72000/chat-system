@@ -43,4 +43,14 @@ class UserPolicy
     {
         return $user->hasPermission('User','forceDelete');
     }
+
+    public function logView(User $user, User $model)
+    {
+        return $user->hasPermission('User','logView');
+    }
+
+    public function assignRole(User $user, User $model)
+    {
+        return $user->hasPermission('User','assignRole');
+    }
 }

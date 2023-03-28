@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TwoFAController;
+use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 use App\Http\Controllers\UserManagement\RoleController;
 use App\Http\Controllers\UserManagement\UserController;
 use App\Http\Controllers\UserManagement\ModuleController;
@@ -44,6 +45,8 @@ Route::group(['middleware'=>['auth']],function()
     Route::get('get/user',                  [ChatController::class,'getUsers'])->name('getUsers');
     Route::get('profile/{id}',              [ChatController::class,'profile'])->name('profile');
     Route::post('store/profile/{id}',       [ChatController::class,'storeProfile'])->name('storeProfile');
+
+    Route::get('laravel/logs',              [UserController::class,'laravelLogs'])->name('laravelLogs');
 });
 
 // Authentication

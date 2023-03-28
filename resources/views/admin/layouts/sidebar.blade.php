@@ -62,14 +62,16 @@
                             </a>
                         </li>
                         @endcan
-                        <li class="nav-item">
-                            <a href="{{ route('roleAssign') }}"
-                                class="nav-link {{ request()->is('assign') ? 'active' : ''}} )">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Assign Role</p>
-                            </a>
-                        </li>
-                        @can('restore',new App\Models\Role())
+                        @can('assignRole',new App\Models\User())
+                            <li class="nav-item">
+                                <a href="{{ route('roleAssign') }}"
+                                    class="nav-link {{ request()->is('assign') ? 'active' : ''}} )">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Assign Role</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('restore',new App\Models\User())
                             <li class="nav-item">
                                 <a href="{{ route('trashList') }}"
                                     class="nav-link {{ str_contains(request()->path(), 'trash') ? 'active' : '' }} )">
@@ -80,6 +82,15 @@
                         @endcan
                     </ul>
                 </li>
+                @can('logView',new App\Models\User())
+                    <li class="nav-item">
+                        <a href="{{ route('laravelLogs') }}"
+                            class="nav-link {{ request()->is('logs') ? 'active' : ''}}  )">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Laravel Logs</p>
+                        </a>
+                    </li>
+                @endcan
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
