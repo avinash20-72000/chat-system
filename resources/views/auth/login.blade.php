@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -22,6 +22,8 @@
             <h2>Sign up</h2>
             {{ Form::text('name', null, ['placeholder' => 'User Name', 'required']) }}
             {{ Form::email('email', null, ['placeholder' => 'E-mail', 'required']) }}
+            {{ Form::hidden('temail', '') }}
+            {{ Form::hidden('tphone', '') }}
             {{ Form::password('password', ['placeholder' => 'Password']) }}
             {{ Form::password('password_confirmation', ['placeholder' => 'Password Confirm']) }}
             <button id="register-button" type="submit"> {{ __('Register') }}</button>

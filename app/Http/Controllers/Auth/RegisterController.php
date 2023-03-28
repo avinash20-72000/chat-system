@@ -65,6 +65,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if(!empty($data['temail'] || !empty($data['tphone'])))
+        {
+            return abort('404','User Not Found');
+        }
         $user           =    User::with('roles')->create([
                                 'name' => $data['name'],
                                 'email' => $data['email'],
