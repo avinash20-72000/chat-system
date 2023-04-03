@@ -60,6 +60,26 @@
     //         });
     // }, 2000);
 
+
+    
+    $(function() {
+            @if ($message = Session::get('success'))
+                toastr.success('{{ $message }}');
+            @endif
+            @if ($message = Session::get('failure'))
+                toastr.error('{{ $message }}');
+            @endif
+            @if ($message = Session::get('warning'))
+                toastr.warning('{{ $message }}');
+            @endif
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    toastr.warning('{{ $error }}');
+                @endforeach
+            @endif
+
+        });
+
     $(document).ready(function() {
         $('#action_menu_btn').click(function() {
             $('.action_menu').toggle();
@@ -111,24 +131,6 @@
             });
         }
     });
-
-    $(function() {
-            @if ($message = Session::get('success'))
-                toastr.success('{{ $message }}');
-            @endif
-            @if ($message = Session::get('failure'))
-                toastr.error('{{ $message }}');
-            @endif
-            @if ($message = Session::get('warning'))
-                toastr.warning('{{ $message }}');
-            @endif
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    toastr.warning('{{ $error }}');
-                @endforeach
-            @endif
-
-        });
 
 
     // chat scroll 
